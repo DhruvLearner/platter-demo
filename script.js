@@ -3,14 +3,8 @@ class ProductList extends HTMLElement {
     this.initVariables();
 
     try {
-      const response = await fetch(this.apiUrl);
-
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-
-      const data = await response.json();
-      this.render(data.products);
+      const products = await this.loadProducts();
+      this.render(products);
     } catch (error) {
       console.error('Could not load products:', error);
       this.innerHTML = '<p class="mt-6 text-center text-(--color-muted)">Sorry, products could not be loaded. Please try again later.</p>';
@@ -19,7 +13,29 @@ class ProductList extends HTMLElement {
 
   initVariables() {
     this.apiUrl = 'https://api.npoint.io/34e31e1ba446f2e67982';
+    this.fallbackUrl = 'products.json';
     this.mobileVisibleCount = 4;
+  }
+
+  // Falls back to products.json if the API fails
+  async loadProducts() {
+    try {
+      return await this.fetchProducts(this.apiUrl);
+    } catch (error) {
+      console.warn('Mock API unavailable, using products.json instead:', error);
+      return await this.fetchProducts(this.fallbackUrl);
+    }
+  }
+
+  async fetchProducts(url) {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Request to ${url} failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.products;
   }
 
   render(products) {
@@ -39,6 +55,13 @@ class ProductList extends HTMLElement {
         <li class="md:w-(--card-width) md:shrink-0 ${hiddenOnMobile}">
           <product-card class="block pb-2 md:pb-4">
             <a href="#" tabindex="-1" class="group relative block aspect-[158/159] overflow-hidden md:aspect-square rounded-(--card-radius) bg-gray-100">
+              <span class="absolute inset-0 flex items-center justify-center text-(--color-star-empty)" aria-hidden="true">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <path d="M21 15l-5-5L5 21"/>
+                </svg>
+              </span>
               <img src="${this.imageUrl(product.image)}" alt="${product.alt}" loading="lazy" class="product-image group-hover:opacity-0">
               <img src="${this.imageUrl(product.hoverImage)}" alt="" loading="lazy" class="product-image opacity-0 group-hover:opacity-100">
               <span class="badge">Best Seller</span>
@@ -49,7 +72,7 @@ class ProductList extends HTMLElement {
               <h3 class="product-title">
                 <a href="#" class="hover:underline">${product.name}</a>
               </h3>
-              <p class="product-reviews flex items-center gap-1">
+              <p class="product-reviews flex items-center gap-1 whitespace-nowrap">
                 <span class="flex gap-0.5" aria-hidden="true">${this.renderStars(product.rating)}</span>
                 <span class="sr-only">Rated ${product.rating} out of 5,</span>
                 ${product.reviews.toLocaleString('en-US')} Reviews
@@ -67,13 +90,29 @@ class ProductList extends HTMLElement {
       <ul class="relative mt-6 grid grid-cols-2 gap-x-[11px] gap-y-3 overflow-hidden transition-[max-height] duration-500 ease-in-out max-md:max-h-(--grid-height) md:mt-9 md:flex md:gap-6 md:overflow-x-auto">
         ${productCards}
       </ul>
-      <button type="button" class="button mt-3 md:hidden">Show More</button>
+      <button type="button" class="button mt-3 w-full cursor-pointer px-6 py-4 md:hidden">Show More</button>
     `;
 
+    this.setupImageFallback();
     this.setupShowMore();
   }
 
-  // Mobile only: show the first cards, then slide the rest open on "Show More"
+  // Removes broken photos so the placeholder or the other photo shows
+  setupImageFallback() {
+    this.querySelectorAll('.product-image').forEach((image) => {
+      image.addEventListener('error', () => {
+        const imageBox = image.parentElement;
+        image.remove();
+
+        const remainingImage = imageBox.querySelector('.product-image');
+        if (remainingImage) {
+          remainingImage.className = 'product-image';
+        }
+      });
+    });
+  }
+
+  // Mobile only
   setupShowMore() {
     const grid = this.querySelector('ul');
     const button = this.querySelector('button');

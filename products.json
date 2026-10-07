@@ -1,0 +1,14 @@
+{
+  "products": [
+    {"id": 1, "name": "Studio Wireless Headphones", "image": "1505740420928-5e560c06d30e", "hoverImage": "1583394838336-acd977736f90", "alt": "Black headphones on a yellow background", "rating": 4.5, "reviews": 1234, "price": 104.95, "compareAtPrice": null},
+    {"id": 2, "name": "Classic Black Sunglasses", "image": "1572635196237-14b3f281503f", "hoverImage": "1511499767150-a48a237f0083", "alt": "Black sunglasses on a white table", "rating": 5, "reviews": 1234, "price": 104.95, "compareAtPrice": 123.95},
+    {"id": 3, "name": "Knit Runner Sneakers Red", "image": "1542291026-7eec264c27ff", "hoverImage": "1606107557195-0e29a4b5b4aa", "alt": "Red running shoe on a red background", "rating": 5, "reviews": 1234, "price": 104.95, "compareAtPrice": null},
+    {"id": 4, "name": "Sunshine Banana Bunch", "image": "1571771894821-ce9b6c11b08e", "hoverImage": "1603833665858-e61d17a86224", "alt": "Bunch of bananas on a yellow background", "rating": 5, "reviews": 1234, "price": 104.95, "compareAtPrice": 149.95},
+    {"id": 5, "name": "Vintage Toy Car Cream", "image": "1581235720704-06d3acfcb36f", "hoverImage": "1594787318286-3d835c1d207f", "alt": "Cream toy car on a yellow background", "rating": 5, "reviews": 1234, "price": 104.95, "compareAtPrice": null},
+    {"id": 6, "name": "Heritage Leather Watch", "image": "1524805444758-089113d48a6d", "hoverImage": "1523275335684-37898b6baf30", "alt": "Silver watch with a brown leather strap", "rating": 3.5, "reviews": 986, "price": 189.95, "compareAtPrice": null},
+    {"id": 7, "name": "Instant Film Camera", "image": "1526170375885-4d8ecf77b99f", "hoverImage": "1516035069371-29a1b244cc32", "alt": "White instant camera on a grey table", "rating": 5, "reviews": 742, "price": 129.95, "compareAtPrice": 159.95},
+    {"id": 8, "name": "Everyday Backpack Navy", "image": "1553062407-98eeb64c6a62", "hoverImage": "1622560480605-d83c853bc5c3", "alt": "Navy backpack against a white wall", "rating": 4, "reviews": 512, "price": 79.95, "compareAtPrice": null},
+    {"id": 9, "name": "Insulated Bottle Forest Green", "image": "1602143407151-7111542de6e8", "hoverImage": "1523362628745-0c100150b504", "alt": "Green insulated water bottle", "rating": 5, "reviews": 2048, "price": 34.95, "compareAtPrice": null},
+    {"id": 10, "name": "Court Sneakers Tan", "image": "1549298916-b41d501d3772", "hoverImage": "1491553895911-0055eca6402d", "alt": "Tan leather sneaker on a mustard fabric", "rating": 5, "reviews": 1120, "price": 109.95, "compareAtPrice": 129.95}
+  ]
+}

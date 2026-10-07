@@ -20,7 +20,7 @@
       <header class="flex items-center justify-center md:justify-between">
         <h2 id="best-sellers-heading" class="section-heading">Best Sellers</h2>
 
-        <a href="#" class="shop-all-link hidden md:inline-flex">
+        <a href="#" class="shop-all-link hidden items-center gap-2 px-8 py-4 hover:underline md:inline-flex">
           Shop All Best Sellers
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M3.333 10H16.667M11.667 15L16.667 10L11.667 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -28,7 +28,12 @@
         </a>
       </header>
 
-      <product-list class="block"></product-list>
+      <product-list class="block">
+        <div role="status" class="flex justify-center py-20">
+          <span class="size-8 animate-spin rounded-full border-2 border-(--color-star-empty) border-t-(--color-ink)"></span>
+          <span class="sr-only">Loading products…</span>
+        </div>
+      </product-list>
     </section>
   </main>
 
