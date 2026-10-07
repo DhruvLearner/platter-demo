@@ -5,12 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Best Sellers</title>
 
-  <!-- Tailwind CSS (CDN, no build step needed) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&family=Source+Serif+Pro:wght@700;900&display=swap" rel="stylesheet">
+
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-white antialiased">
+
+  <main>
+    <section aria-labelledby="best-sellers-heading" class="px-6 py-9 lg:px-32 lg:pt-20 lg:pb-25">
+      <header class="flex items-center justify-center md:justify-between">
+        <h2 id="best-sellers-heading" class="section-heading">Best Sellers</h2>
+
+        <a href="#" class="shop-all-link hidden md:inline-flex">
+          Shop All Best Sellers
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3.333 10H16.667M11.667 15L16.667 10L11.667 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </header>
+
+      <product-list class="block"></product-list>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
