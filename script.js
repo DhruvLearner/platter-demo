@@ -87,14 +87,18 @@ class ProductList extends HTMLElement {
     });
 
     this.innerHTML = `
-      <ul class="relative mt-6 grid grid-cols-2 gap-x-[11px] gap-y-3 overflow-hidden transition-[max-height] duration-500 ease-in-out max-md:max-h-(--grid-height) md:mt-9 md:flex md:gap-6 md:overflow-x-auto">
+      <ul data-product-grid class="no-native-scrollbar relative mt-6 grid grid-cols-2 gap-x-[11px] gap-y-3 overflow-hidden transition-[max-height] duration-500 ease-in-out max-md:max-h-(--grid-height) md:mt-9 md:flex md:gap-6 md:overflow-x-auto">
         ${productCards}
       </ul>
+      <div data-scrollbar class="scrollbar mt-12 hidden md:block" aria-hidden="true">
+        <div data-scrollbar-thumb class="scrollbar-thumb"></div>
+      </div>
       <button type="button" class="button mt-3 w-full cursor-pointer px-6 py-4 md:hidden">Show More</button>
     `;
 
     this.setupImageFallback();
     this.setupShowMore();
+    this.setupScrollbar();
   }
 
   // Removes broken photos so the placeholder or the other photo shows
@@ -139,6 +143,36 @@ class ProductList extends HTMLElement {
       grid.style.setProperty('--grid-height', `${grid.scrollHeight}px`);
       grid.addEventListener('transitionend', () => grid.style.setProperty('--grid-height', 'none'), { once: true });
       button.hidden = true;
+    });
+  }
+
+  // Desktop only: thumb follows the row and can be dragged
+  setupScrollbar() {
+    const grid = this.querySelector('[data-product-grid]');
+    const track = this.querySelector('[data-scrollbar]');
+    const thumb = this.querySelector('[data-scrollbar-thumb]');
+
+    // How many pixels the row scrolls for each pixel the thumb moves
+    const scrollRatio = () => (grid.scrollWidth - grid.clientWidth) / (track.clientWidth - thumb.offsetWidth);
+    const moveThumb = () => {
+      thumb.style.left = `${grid.scrollLeft / scrollRatio()}px`;
+    };
+
+    grid.addEventListener('scroll', moveThumb);
+    window.addEventListener('resize', moveThumb);
+
+    let lastX;
+
+    thumb.addEventListener('pointerdown', (event) => {
+      lastX = event.clientX;
+      thumb.setPointerCapture(event.pointerId);
+    });
+
+    thumb.addEventListener('pointermove', (event) => {
+      if (thumb.hasPointerCapture(event.pointerId)) {
+        grid.scrollLeft += (event.clientX - lastX) * scrollRatio();
+        lastX = event.clientX;
+      }
     });
   }
 

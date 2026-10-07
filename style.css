@@ -57,6 +57,45 @@ body {
   transition: opacity 300ms ease;
 }
 
+.no-native-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-native-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar {
+  position: relative;
+  height: 4px;
+  background-color: var(--color-track);
+}
+
+.scrollbar-thumb {
+  position: absolute;
+  top: 50%;
+  width: min(480px, 100%);
+  height: 4px;
+  border-radius: 6px;
+  background-color: var(--color-ink);
+  transform: translateY(-50%);
+  transition: height 150ms ease;
+  cursor: grab;
+  touch-action: none;
+}
+
+/* Bigger invisible hit area so the thin bar is easy to grab */
+.scrollbar-thumb::before {
+  content: "";
+  position: absolute;
+  inset: -8px 0;
+}
+
+.scrollbar-thumb:hover,
+.scrollbar-thumb:active {
+  height: 6px;
+}
+
 .badge {
   position: absolute;
   top: 4px;
